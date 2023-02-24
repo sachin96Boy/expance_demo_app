@@ -11,8 +11,13 @@ class HomePage extends StatelessWidget {
       ),
       body: Column(
         children: const [
-          Card(
-            child: Text('Chart section'),
+          SizedBox(
+            width: double.infinity,
+            child: Card(
+              color: Colors.green,
+              elevation: 5.0,
+              child: Text('Chart section'),
+            ),
           ),
           Card(
             child: Text("List of list items section"),
