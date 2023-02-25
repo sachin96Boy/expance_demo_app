@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expance_app/Transaction/transaction.dart';
+import 'package:personal_expance_app/widgets/transaction_card.dart';
 
 class HomePage extends StatelessWidget {
   final List<Transaction> transactions = [
@@ -36,9 +37,7 @@ class HomePage extends StatelessWidget {
           ),
           Column(
             children: transactions
-                .map((elem) => Card(
-                      child: Text(elem.title),
-                    ))
+                .map((elem) => TransactionCard(transaction: elem))
                 .toList(),
           )
         ],
