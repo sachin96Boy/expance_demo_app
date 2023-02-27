@@ -9,7 +9,10 @@ class TransactionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Row(children: [
-        SizedBox(
+        Container(
+          margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.black26, width: 2.0)),
           child: Text(transaction.amount.toString()),
         ),
         Column(
