@@ -1,3 +1,4 @@
+import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
 import 'package:personal_expance_app/Transaction/transaction.dart';
 
@@ -7,19 +8,44 @@ class TransactionCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    const pattern = 'yMMMd';
     return Card(
-      child: Row(children: [
+      child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
         Container(
+          padding: const EdgeInsets.all(10.0),
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           decoration: BoxDecoration(
-              border: Border.all(color: Colors.black26, width: 2.0)),
-          child: Text(transaction.amount.toString()),
+            border: Border.all(
+              color: Colors.green,
+              width: 2.0,
+            ),
+          ),
+          child: Row(
+            children: [
+              const Icon(Icons.attach_money, color: Colors.green),
+              Text(transaction.amount.toString(),
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 20.0,
+                    color: Colors.green,
+                  )),
+            ],
+          ),
         ),
-        Column(
-          children: [
-            Text(transaction.title),
-            Text(transaction.date.toString())
-          ],
+        Container(
+          margin: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(transaction.title,
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16.0)),
+              Text(
+                transaction.date.format(pattern),
+                style: TextStyle(color: Colors.grey.shade700),
+              )
+            ],
+          ),
         )
       ]),
     );
