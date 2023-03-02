@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expance_app/Transaction/transaction.dart';
+import 'package:personal_expance_app/widgets/data_input_section.dart';
 import 'package:personal_expance_app/widgets/transaction_card.dart';
 
 class HomePage extends StatelessWidget {
@@ -35,6 +36,7 @@ class HomePage extends StatelessWidget {
               child: Text('Chart section'),
             ),
           ),
+          const DataInputSection(),
           Column(
             children: transactions
                 .map((elem) => TransactionCard(transaction: elem))
