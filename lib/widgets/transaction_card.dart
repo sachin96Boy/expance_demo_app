@@ -1,6 +1,7 @@
 import 'package:dart_date/dart_date.dart';
 import 'package:flutter/material.dart';
-import 'package:personal_expance_app/Transaction/transaction.dart';
+
+import '../Transaction/transaction.dart';
 
 class TransactionCard extends StatelessWidget {
   final Transaction transaction;
