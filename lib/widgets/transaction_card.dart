@@ -24,7 +24,7 @@ class TransactionCard extends StatelessWidget {
           child: Row(
             children: [
               const Icon(Icons.attach_money, color: Colors.green),
-              Text(transaction.amount.toString(),
+              Text(transaction.amount.toStringAsFixed(2),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 20.0,
