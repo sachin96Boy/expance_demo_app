@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expance_app/Transaction/transaction.dart';
+
+import '../Transaction/transaction.dart';
 
 import '../widgets/data_input_section.dart';
 import '../widgets/transaction_list.dart';
@@ -26,11 +27,23 @@ class _UserTransactionState extends State<UserTransaction> {
       date: DateTime.now(),
     ),
   ];
+  void _addNewTransation(String title, double amount) {
+    final tansaction = Transaction(
+        id: DateTime.now().toString(),
+        title: title,
+        amount: amount,
+        date: DateTime.now());
+
+    setState(() {
+      _transactions.add(tansaction);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const DataInputSection(),
+        DataInputSection(addTransaction: _addNewTransation),
         TransactionList(transactions: _transactions),
       ],
     );
