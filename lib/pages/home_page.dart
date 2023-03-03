@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import '../widgets/chart.dart';
 import '../Transaction/transaction.dart';
 import '../widgets/data_input_section.dart';
 import '../widgets/transaction_list.dart';
@@ -69,14 +70,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const SizedBox(
-              width: double.infinity,
-              child: Card(
-                color: Colors.green,
-                elevation: 5.0,
-                child: Text('Chart section'),
-              ),
-            ),
+            const Chart(),
             TransactionList(transactions: _transactions),
           ],
         ),
