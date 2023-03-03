@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expance_app/widgets/user_transaction.dart';
 
 import '../widgets/data_input_section.dart';
 import '../widgets/transaction_list.dart';
@@ -22,8 +23,7 @@ class HomePage extends StatelessWidget {
               child: Text('Chart section'),
             ),
           ),
-          DataInputSection(),
-          TransactionList(),
+          UserTransaction()
         ],
       ),
     );
