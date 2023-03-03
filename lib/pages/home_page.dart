@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../Transaction/transaction.dart';
 import '../widgets/data_input_section.dart';
@@ -53,7 +54,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Flutter App"),
+        title: Text(
+          "Expance App",
+          style: GoogleFonts.poppins(),
+        ),
         actions: [
           IconButton(
               onPressed: () {

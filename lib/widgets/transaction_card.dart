@@ -17,13 +17,14 @@ class TransactionCard extends StatelessWidget {
           margin: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 15.0),
           decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.green,
+              color: Theme.of(context).primaryColorLight,
               width: 2.0,
             ),
           ),
           child: Row(
             children: [
-              const Icon(Icons.attach_money, color: Colors.green),
+              Icon(Icons.attach_money,
+                  color: Theme.of(context).primaryColorDark),
               Text(transaction.amount.toStringAsFixed(2),
                   style: const TextStyle(
                     fontWeight: FontWeight.bold,
