@@ -12,11 +12,27 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
         height: 400.0,
-        child: ListView.builder(
-          itemBuilder: (context, index) {
-            return TransactionCard(transaction: transactions[index]);
-          },
-          itemCount: transactions.length,
-        ));
+        child: transactions.isEmpty
+            ? Column(
+                children: [
+                  const Text("No Items add Yet"),
+                  const SizedBox(
+                    height: 10.0,
+                  ),
+                  SizedBox(
+                    height: 300.0,
+                    child: Image.asset(
+                      'assets/images/noitems.png',
+                      fit: BoxFit.cover,
+                    ),
+                  )
+                ],
+              )
+            : ListView.builder(
+                itemBuilder: (context, index) {
+                  return TransactionCard(transaction: transactions[index]);
+                },
+                itemCount: transactions.length,
+              ));
   }
 }
