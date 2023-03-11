@@ -28,6 +28,15 @@ class _HomePageState extends State<HomePage> {
     //   date: DateTime.now(),
     // ),
   ];
+
+  List<Transaction> get _recentTransactions {
+    return _transactions
+        .where((element) => element.date.isAfter(DateTime.now().subtract(
+              const Duration(days: 7),
+            )))
+        .toList();
+  }
+
   void _addNewTransation(String title, double amount) {
     final tansaction = Transaction(
         id: DateTime.now().toString(),
@@ -70,7 +79,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Chart(),
+            Chart(recentTransactions: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
