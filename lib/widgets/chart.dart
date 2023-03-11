@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:personal_expance_app/Transaction/transaction.dart';
+import 'package:personal_expance_app/widgets/chart_bar.dart';
 
 class Chart extends StatelessWidget {
   final List<Transaction> recentTransactions;
@@ -17,15 +18,25 @@ class Chart extends StatelessWidget {
           totalSum += transData.amount;
         }
       }
-      print(DateFormat.E().format(weekDay));
-      print(totalSum);
-      return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
+      // print(DateFormat.E().format(weekDay));
+      // print(totalSum);
+      return {
+        'day': DateFormat.E().format(weekDay).substring(0, 1),
+        'amount': totalSum
+      };
     });
+  }
+
+  double get maxSpending {
+    return groupedTransactionValues.fold(
+        0.0,
+        (previousValue, element) =>
+            previousValue + (element['amount'] as double));
   }
 
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactionValues);
+    // print(groupedTransactionValues);
     return SizedBox(
       width: double.infinity,
       child: Card(
@@ -33,7 +44,15 @@ class Chart extends StatelessWidget {
         elevation: 6.0,
         margin: const EdgeInsets.all(20.0),
         child: Row(
-          children: groupedTransactionValues.map((e) => Text('$e')).toList(),
+          children: groupedTransactionValues
+              .map((e) => ChartBar(
+                    label: (e['day'] as String),
+                    spendingAmount: (e['amount'] as double),
+                    spendingPctofTotal: maxSpending == 0.0
+                        ? 0.0
+                        : (e['amount'] as double) / maxSpending,
+                  ))
+              .toList(),
         ),
       ),
     );
