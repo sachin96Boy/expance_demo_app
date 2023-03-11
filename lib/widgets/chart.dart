@@ -43,16 +43,23 @@ class Chart extends StatelessWidget {
         color: Colors.green,
         elevation: 6.0,
         margin: const EdgeInsets.all(20.0),
-        child: Row(
-          children: groupedTransactionValues
-              .map((e) => ChartBar(
-                    label: (e['day'] as String),
-                    spendingAmount: (e['amount'] as double),
-                    spendingPctofTotal: maxSpending == 0.0
-                        ? 0.0
-                        : (e['amount'] as double) / maxSpending,
-                  ))
-              .toList(),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactionValues
+                .map((e) => Flexible(
+                      fit: FlexFit.tight,
+                      child: ChartBar(
+                        label: (e['day'] as String),
+                        spendingAmount: (e['amount'] as double),
+                        spendingPctofTotal: maxSpending == 0.0
+                            ? 0.0
+                            : (e['amount'] as double) / maxSpending,
+                      ),
+                    ))
+                .toList(),
+          ),
         ),
       ),
     );
