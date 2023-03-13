@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:intl/intl.dart';
+
+import '../Transaction/transaction.dart';
 
 class Chart extends StatefulWidget {
-  const Chart({super.key});
+  final List<Transaction> recentTransactions;
+  const Chart({super.key, required this.recentTransactions});
 
   @override
   State<Chart> createState() => _ChartState();
@@ -13,6 +17,21 @@ class _ChartState extends State<Chart> {
   final Duration animDuration = const Duration(milliseconds: 250);
   int touchedIndex = -1;
   bool isPlaying = false;
+
+  List<Map<String, Object>> get groupedTransactionVales {
+    return List.generate(7, (index) {
+      final weekDay = DateTime.now().subtract(Duration(days: index));
+      double totalSum = 0.0;
+      for (Transaction transData in widget.recentTransactions) {
+        if (transData.date.day == weekDay.day &&
+            transData.date.month == weekDay.month &&
+            transData.date.year == weekDay.year) {
+          totalSum += transData.amount;
+        }
+      }
+      return {'day': DateFormat.E().format(weekDay), 'amount': totalSum};
+    }).reversed.toList();
+  }
 
   BarChartData mainBarData() {
     return BarChartData(
@@ -116,6 +135,7 @@ class _ChartState extends State<Chart> {
     Color? barColor,
     double width = 22,
     List<int> showTooltips = const [],
+    required double maxAmount,
   }) {
     barColor ??= Colors.white;
     return BarChartGroupData(
@@ -130,7 +150,7 @@ class _ChartState extends State<Chart> {
               : const BorderSide(color: Colors.white, width: 0),
           backDrawRodData: BackgroundBarChartRodData(
             show: true,
-            toY: 20,
+            toY: maxAmount,
             color: Colors.white.withOpacity(0.3),
           ),
         ),
@@ -139,26 +159,20 @@ class _ChartState extends State<Chart> {
     );
   }
 
-  List<BarChartGroupData> showingGroups() => List.generate(7, (i) {
-        switch (i) {
-          case 0:
-            return makeGroupData(0, 5, isTouched: i == touchedIndex);
-          case 1:
-            return makeGroupData(1, 6.5, isTouched: i == touchedIndex);
-          case 2:
-            return makeGroupData(2, 5, isTouched: i == touchedIndex);
-          case 3:
-            return makeGroupData(3, 7.5, isTouched: i == touchedIndex);
-          case 4:
-            return makeGroupData(4, 9, isTouched: i == touchedIndex);
-          case 5:
-            return makeGroupData(5, 11.5, isTouched: i == touchedIndex);
-          case 6:
-            return makeGroupData(6, 6.5, isTouched: i == touchedIndex);
-          default:
-            return throw Error();
-        }
-      });
+  List<BarChartGroupData> showingGroups() {
+    List<BarChartGroupData> chartList = [];
+    double maxTotal = 0.0;
+    for (var e in groupedTransactionVales) {
+      maxTotal += e['amount'] as double;
+    }
+    groupedTransactionVales.asMap().forEach((index, e) {
+      // print(maxTotal);
+      chartList.add(makeGroupData(index, e['amount'] as double,
+          isTouched: index == touchedIndex, maxAmount: maxTotal));
+    });
+
+    return chartList;
+  }
 
   Widget getTitles(double value, TitleMeta meta) {
     const style = TextStyle(
@@ -166,42 +180,24 @@ class _ChartState extends State<Chart> {
       fontWeight: FontWeight.bold,
       fontSize: 14,
     );
-    Widget text;
-    switch (value.toInt()) {
-      case 0:
-        text = const Text('M', style: style);
-        break;
-      case 1:
-        text = const Text('T', style: style);
-        break;
-      case 2:
-        text = const Text('W', style: style);
-        break;
-      case 3:
-        text = const Text('T', style: style);
-        break;
-      case 4:
-        text = const Text('F', style: style);
-        break;
-      case 5:
-        text = const Text('S', style: style);
-        break;
-      case 6:
-        text = const Text('S', style: style);
-        break;
-      default:
-        text = const Text('', style: style);
-        break;
-    }
+    String text = "";
+    int indexVal = value.toInt();
+
+    groupedTransactionVales.asMap().forEach((key, value) {
+      if (key == indexVal) {
+        text = (value['day'] as String);
+      }
+    });
     return SideTitleWidget(
       axisSide: meta.axisSide,
       space: 16,
-      child: text,
+      child: Text(text, style: style),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    // print(groupedTransactionVales);
     return SizedBox(
       width: double.infinity,
       child: Card(

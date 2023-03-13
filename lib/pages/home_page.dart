@@ -18,16 +18,24 @@ class _HomePageState extends State<HomePage> {
     // Transaction(
     //   id: "t1",
     //   title: "new Watch",
-    //   amount: 67.35,
+    //   amount: 10.35,
     //   date: DateTime.now(),
     // ),
     // Transaction(
     //   id: "t2",
     //   title: "new Watch with red Panel",
-    //   amount: 45.35,
+    //   amount: 06.35,
     //   date: DateTime.now(),
     // ),
   ];
+  List<Transaction> get _recentTransactions {
+    return _transactions
+        .where((element) => element.date.isAfter(DateTime.now().subtract(
+              const Duration(days: 7),
+            )))
+        .toList();
+  }
+
   void _addNewTransation(String title, double amount) {
     final tansaction = Transaction(
         id: DateTime.now().toString(),
@@ -70,7 +78,7 @@ class _HomePageState extends State<HomePage> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const Chart(),
+            Chart(recentTransactions: _recentTransactions),
             TransactionList(transactions: _transactions),
           ],
         ),
