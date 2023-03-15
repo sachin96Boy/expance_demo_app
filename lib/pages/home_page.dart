@@ -68,27 +68,39 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Expance App",
-          style: GoogleFonts.poppins(),
-        ),
-        actions: [
-          IconButton(
-              onPressed: () {
-                _showModelFromBottom(context);
-              },
-              icon: const Icon(Icons.add))
-        ],
+    final appBar = AppBar(
+      title: Text(
+        "Expance App",
+        style: GoogleFonts.poppins(),
       ),
+      actions: [
+        IconButton(
+            onPressed: () {
+              _showModelFromBottom(context);
+            },
+            icon: const Icon(Icons.add))
+      ],
+    );
+    return Scaffold(
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Chart(recentTransactions: _recentTransactions),
-            TransactionList(
-                transactions: _transactions,
-                deleteTransaction: _deleteTransaction),
+            SizedBox(
+                height: (MediaQuery.of(context).size.height -
+                        appBar.preferredSize.height -
+                        MediaQuery.of(context).padding.top) *
+                    0.25,
+                child: Chart(recentTransactions: _recentTransactions)),
+            SizedBox(
+              height: (MediaQuery.of(context).size.height -
+                      appBar.preferredSize.height -
+                      MediaQuery.of(context).padding.top) *
+                  0.75,
+              child: TransactionList(
+                  transactions: _transactions,
+                  deleteTransaction: _deleteTransaction),
+            ),
           ],
         ),
       ),
