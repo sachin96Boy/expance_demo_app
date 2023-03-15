@@ -50,11 +50,32 @@ class _DataInputSectionState extends State<DataInputSection> {
               keyboardType: TextInputType.number,
               onSubmitted: (_) => submitData(),
             ),
-            TextButton(
+            SizedBox(
+              height: 70.0,
+              child: Row(
+                children: const [
+                  Text("No date Choosen yet"),
+                  TextButton(
+                    onPressed: null,
+                    style: ButtonStyle(
+                      foregroundColor: MaterialStatePropertyAll(Colors.green),
+                    ),
+                    child: Text(
+                      "Choose Date",
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            ElevatedButton(
               onPressed: () => submitData,
               style: const ButtonStyle(
                   foregroundColor: MaterialStatePropertyAll(Colors.green)),
-              child: const Text("Add Transaction"),
+              child: const Text(
+                "Add Transaction",
+                style: TextStyle(color: Colors.white),
+              ),
             )
           ],
         ),
