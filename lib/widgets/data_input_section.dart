@@ -23,15 +23,11 @@ class _DataInputSectionState extends State<DataInputSection> {
     final enteredTitle = _titleController.text;
     final enteredAmount = double.parse(_amountController.text);
 
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
+    if (enteredTitle.isEmpty || enteredAmount <= 0) {
       return;
     }
 
-    widget.addTransaction(
-      enteredTitle,
-      enteredAmount,
-      _selectedDate
-    );
+    widget.addTransaction(enteredTitle, enteredAmount, _selectedDate);
 
     Navigator.of(context).pop();
   }
@@ -77,9 +73,8 @@ class _DataInputSectionState extends State<DataInputSection> {
               child: Row(
                 children: [
                   Expanded(
-                    child: Text(_selectedDate == null
-                        ? "No date Choosen yet"
-                        : 'picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
+                    child: Text(
+                        'picked Date: ${DateFormat.yMd().format(_selectedDate)}'),
                   ),
                   TextButton(
                     onPressed: _presentDatePicker,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:personal_expance_app/pages/home_page.dart';
+
+import '../pages/home_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -26,7 +27,6 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.green,
           appBarTheme: const AppBarTheme(
             elevation: 5.0,
-            
           )),
       home: const HomePage(),
     );
