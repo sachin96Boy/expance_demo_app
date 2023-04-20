@@ -38,6 +38,7 @@ class TransactionList extends StatelessWidget {
             : ListView.builder(
                 itemBuilder: (context, index) {
                   return TransactionCard(
+                    // key: ValueKey(index),
                     transaction: transactions[index],
                     deleteTransaction: deleteTransaction,
                   );
